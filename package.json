@@ -1,0 +1,25 @@
+{
+  "name": "resort",
+  "version": "0.1.0",
+  "description": "Text search over Redis",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint && babel-node ./test | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janneh/resort.git"
+  },
+  "keywords": [
+    "text",
+    "search",
+    "indexer",
+    "redis"
+  ],
+  "author": "janneh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janneh/resort/issues"
+  },
+  "homepage": "https://github.com/janneh/resort#readme"
+}
