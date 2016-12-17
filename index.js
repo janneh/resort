@@ -1,31 +1,16 @@
 import { createClient } from 'redis'
 
+import Indexer from './src/indexer'
+import Searcher from './src/searcher'
+
 export function createIndexer(props) {
   // assert props
+  props.client = props.client || createClient()
   return new Indexer(props)
 }
 
 export function createSearcher(props) {
   // assert props
+  props.client = props.client || createClient()
   return new Searcher(props)
-}
-
-class Indexer {
-  constructor(props) {
-    this.key = props.key
-    this.client = props.client || createClient()
-  }
-
-  index() {
-  }
-}
-
-class Searcher {
-  constructor(props) {
-    this.key = props.key
-    this.client = props.client || createClient()
-  }
-
-  search() {
-  }
 }
