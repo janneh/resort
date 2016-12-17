@@ -2,6 +2,8 @@ class Indexer {
   constructor(props) {
     this.key = props.key
     this.client = props.client
+    // props.filterFn: word => boolean
+    this.filterFn = props.filterFn
   }
 
   parseWords(words) {
@@ -17,9 +19,12 @@ class Indexer {
   }
 
   parseText(text) {
-    const words = text
+    const allWords = text
       .match(/\w+/g)
       .map(w => w.toLowerCase())
+    const words = this.filterFn
+      ? allWords.map(word).filter(this.filterFn)
+      : allWords
     return this.parseWords(words)
   }
 
