@@ -11,14 +11,12 @@ class Indexer {
 
   parseWords(words) {
     if (!words) return {}
-    const wordCounts = {}
-    for (let i = 0; i < words.length; i++) {
-      const w = words[i]
-      wordCounts[w] = wordCounts[w]
-        ? ++wordCounts[w]
+    return words.reduce((counts, w) => {
+      counts[w] = counts[w]
+        ? ++counts[w]
         : 1
-    }
-    return { words: Object.keys(wordCounts), wordCounts }
+      return counts
+    }, {})
   }
 
   parseText(text) {
@@ -26,13 +24,14 @@ class Indexer {
       .match(/\w+/g)
       .map(w => w.toLowerCase())
     const words = this.filterFn
-      ? allWords.map(word).filter(this.filterFn)
+      ? allWords.filter(this.filterFn)
       : allWords
     return this.parseWords(words)
   }
 
   index(id, text) {
-    const { words = [], wordCounts } = this.parseText(text)
+    const wordCounts = this.parseText(text)
+    const words = Object.keys(wordCounts)
     const cmds = words.map(word => (
       ['zadd', `${this.key}:index:${word}`, wordCounts[word], id]
     ))
