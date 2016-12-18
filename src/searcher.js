@@ -21,9 +21,9 @@ class Searcher {
     const cmds = words.map(word => ['keys', `${this.key}:index:${word}*`])
     return this.execMulti(cmds)
       .then(replies => (
-        replies.reduce((keys, reply) =>
+        replies.reduce((keys, reply) => (
           keys.concat(reply)
-        , [])
+        ), [])
       ))
   }
 
