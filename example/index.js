@@ -1,4 +1,4 @@
-import { createIndexer } from '../index'
+import { createIndexer, createSearcher } from '../index'
 
 const key = 'panagrams'
 
@@ -12,6 +12,21 @@ const data = {
   333: 'Five hexing wizard bots jump quickly.'
 }
 
-for (const key in data) {
+const indexing = Object.keys(data).map(key =>
   indexer.index(key, data[key])
-}
+)
+
+// Searching
+
+const searcher = createSearcher({ key })
+
+// 'jum' should match 111 (on 'jumps') and 222 (on 'jump')
+
+Promise.all(indexing)
+  .then(() => {
+    searcher
+      .search('jum')
+      .then(result => {
+        console.log("Search results:", result) // eslint-disable-line
+      })
+  })
