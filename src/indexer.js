@@ -1,7 +1,10 @@
+import { execMulti } from './utils'
+
 class Indexer {
   constructor(props) {
     this.key = props.key
     this.client = props.client
+    this.execMulti = execMulti
     // props.filterFn: word => boolean
     this.filterFn = props.filterFn
   }
@@ -33,7 +36,7 @@ class Indexer {
     const cmds = words.map(word => (
       ['zadd', `${this.key}:index:${word}`, wordCounts[word], id]
     ))
-    this.client.multi(cmds).exec(() => {})
+    return this.execMulti(cmds)
   }
 }
 
