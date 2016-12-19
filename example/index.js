@@ -16,17 +16,17 @@ const indexing = Object.keys(data).map(key =>
   indexer.index(key, data[key])
 )
 
+Promise.all(indexing)
+  .then(() => {
+    console.log('Indexing complete...') // eslint-disable-line
+  })
+
 // Searching
 
 const searcher = createSearcher({ key })
 
 // 'jum' should match 111 (on 'jumps') and 222 (on 'jump')
-
-Promise.all(indexing)
-  .then(() => {
-    searcher
-      .search('jum')
-      .then(result => {
-        console.log("Search results:", result) // eslint-disable-line
-      })
+searcher.search('jum')
+  .then(result => {
+    console.log("Search results:", result) // eslint-disable-line
   })
