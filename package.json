@@ -4,6 +4,7 @@
   "description": "Text search over Redis",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "npm run lint && babel-node ./test | faucet"
   },
   "repository": {
@@ -28,9 +29,16 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-0": "^6.16.0",
     "eslint": "^3.12.1",
+    "faucet": "0.0.1",
     "tape": "^4.6.3"
   },
   "dependencies": {
     "redis": "^2.6.3"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
   }
 }
