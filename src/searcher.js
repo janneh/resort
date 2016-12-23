@@ -7,6 +7,12 @@ class Searcher {
     this.execMulti = execMulti
   }
 
+  flattenResponses(responses) {
+    return responses.reduce((acc, response) => (
+      acc.concat(response)
+    ), [])
+  }
+
   parsePhrase(phrase) {
     return phrase
       .match(/\w+/g)
@@ -18,13 +24,17 @@ class Searcher {
   }
 
   getKeys(words) {
-    const cmds = words.map(word => ['keys', `${this.key}:index:${word}*`])
-    return this.execMulti(cmds)
-      .then(replies => (
-        replies.reduce((keys, reply) => (
-          keys.concat(reply)
-        ), [])
-      ))
+    const matchFull = words.map(word => ['keys', `${this.key}:index:${word}`])
+    const matchPart = words.map(word => ['keys', `${this.key}:index:${word}*`])
+    return this
+      .execMulti(matchFull)
+      .then(this.flattenResponses)
+      .then(keys => {
+        if (keys.length > 0) return keys
+        return this
+          .execMulti(matchPart)
+          .then(this.flattenResponses)
+      })
   }
 
   getResults(keys, searchKey) {
