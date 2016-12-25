@@ -1,6 +1,6 @@
 {
   "name": "resort",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Text search over Redis",
   "scripts": {
     "lint": "eslint .",
