@@ -17,7 +17,7 @@ class Searcher {
     return phrase
       .match(/\w+/g)
       .reduce((parsedWords, word) => (
-        parsedWords.includes(word)
+        parsedWords.indexOf(word) !== -1
           ? parsedWords
           : parsedWords.concat([word.toLowerCase()])
       ), [])
