@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && babel-node ./test | faucet",
-    "build": "babel -d ./build index.js",
+    "build": "babel -d ./build index.js & babel ./src -d ./build/src",
     "prepublish": "npm run build",
     "postpublish": "rm -r ./build"
   },
