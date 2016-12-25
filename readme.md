@@ -9,7 +9,7 @@ $ npm install --save resort
 
 ## Usage
 
-### Indexing
+#### Indexing
 
 ```js
 import { createIndexer } from 'resort'
@@ -33,7 +33,7 @@ Promise.all(indexing)
   })
 ```
 
-### Searching
+#### Searching
 
 ```js
 import { createSearcher } from 'resort'
@@ -45,3 +45,35 @@ searcher.search('cry')
     console.log('Search results:', result)
   })
 ```
+
+### API
+
+#### createIndexer(options)
+Returns an indexer with an `index(id, content)` method on it to be used for indexing.
+##### options
+Type: `object`
+###### key *(required)*
+Type: `string`
+
+The key under which the index will be available
+###### client
+Type: `RedisClient`
+
+[`RedisClient`](https://github.com/NodeRedis/node_redis#rediscreateclient) to connect to Redis. Default to host `localhost` and port `6379` if no client option is provided.
+
+###### filterFn
+Type: `function(word: String): Boolean`
+
+Filter function applied to each words of in the content.
+
+#### createSearcher(options)
+##### options
+Type: `object`
+###### key *(required)*
+Type: `string`
+
+The key for the index to search
+###### client
+Type: `RedisClient`
+
+[`RedisClient`](https://github.com/NodeRedis/node_redis#rediscreateclient) to connect to Redis. Default to host `localhost` and port `6379` if no client option is provided.
