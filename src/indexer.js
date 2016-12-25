@@ -5,7 +5,6 @@ class Indexer {
     this.key = props.key
     this.client = props.client
     this.execMulti = execMulti
-    // props.filterFn: word => boolean
     this.filterFn = props.filterFn
   }
 
