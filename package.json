@@ -4,7 +4,10 @@
   "description": "Text search over Redis",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && babel-node ./test | faucet"
+    "test": "npm run lint && babel-node ./test | faucet",
+    "build": "babel -d ./build index.js",
+    "prepublish": "npm run build",
+    "postpublish": "rm -r ./build"
   },
   "repository": {
     "type": "git",
