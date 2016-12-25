@@ -2,7 +2,6 @@
   "name": "resort",
   "version": "0.1.0",
   "description": "Text search over Redis",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && babel-node ./test | faucet"
@@ -40,5 +39,9 @@
       "es2015",
       "stage-0"
     ]
-  }
+  },
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ]
 }

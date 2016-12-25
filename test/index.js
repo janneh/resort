@@ -16,7 +16,7 @@ test('createSearcher should be a function', t => {
   t.is(typeof createSearcher, 'function')
 })
 
-test('createSearcher should return an searcher object', t => {
+test('createSearcher should return a searcher object', t => {
   t.plan(1)
   t.is(typeof createSearcher({}), 'object')
 })
