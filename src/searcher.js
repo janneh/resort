@@ -7,12 +7,6 @@ class Searcher {
     this.execMulti = execMulti
   }
 
-  flattenResponses(responses) {
-    return responses.reduce((acc, response) => (
-      acc.concat(response)
-    ), [])
-  }
-
   parsePhrase(phrase) {
     return phrase
       .match(/\w+/g)
@@ -23,22 +17,10 @@ class Searcher {
       ), [])
   }
 
-  getKeys(words) {
-    const matchFull = words.map(word => ['keys', `${this.key}:index:${word}`])
-    const matchPart = words.map(word => ['keys', `${this.key}:index:${word}*`])
-    return this
-      .execMulti(matchFull)
-      .then(this.flattenResponses)
-      .then(keys => {
-        if (keys.length > 0) return keys
-        return this
-          .execMulti(matchPart)
-          .then(this.flattenResponses)
-      })
-  }
-
-  getResults(keys, searchKey) {
-    if (!keys) return Promise.resolve([])
+  getResults(words) {
+    if (!words) return Promise.resolve([])
+    const keys = words.map(word => `${this.key}:index:${word}`)
+    const searchKey = `${this.key}:search:${words.join(':')}`
     return this.execMulti([
       ['zunionstore', searchKey, keys.length, ...keys],
       ['expire', searchKey, 10],
@@ -48,10 +30,7 @@ class Searcher {
 
   search(phrase) {
     const words = this.parsePhrase(phrase)
-    const searchKey = `${this.key}:search:${words.join(':')}`
-    return this.getKeys(words)
-      .then(keys => this.getResults(keys, searchKey))
-      .then(searchResult => searchResult[2])
+    return this.getResults(words).then(result => result[2])
   }
 }
 

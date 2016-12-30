@@ -26,7 +26,7 @@ Promise.all(indexing)
 const searcher = createSearcher({ key })
 
 // 'jum' should match 111 (on 'jumps') and 222 (on 'jump')
-searcher.search('jum')
+searcher.search('jump')
   .then(result => {
     console.log("Search results:", result) // eslint-disable-line
   })
